@@ -1,7 +1,9 @@
 from simpleeval import simple_eval
 from langflow.custom.custom_component.component import Component
+from langflow.schema import Data
+from langflow.inputs import MessageTextInput
 from langflow.io import Output, MessageTextInput
-from math import sqrt, log, sin, cos, tan, exp
+from math import sqrt, log, sin, cos, tan,exp
 
 
 class CalculatorComponent(Component):
@@ -34,9 +36,9 @@ class CalculatorComponent(Component):
         )
     ]
 
-    def calculate(self):
+    def calculate(self) -> Data:
         try:
             result = simple_eval(self.expression, functions=self.MATHS_FUNCTIONS)
-            return str(result)
+            return Data(data={"result": str(result)})
         except Exception as e:
-            return f"Error: {str(e)}"
+            return Data(data=f"Error: {str(e)}")
